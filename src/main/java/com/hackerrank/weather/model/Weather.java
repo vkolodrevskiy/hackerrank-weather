@@ -2,16 +2,45 @@ package com.hackerrank.weather.model;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "tutorials")
 public class Weather {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private Integer id;
+
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//    @Temporal(TemporalType.DATE)
+    @Column(name = "date")
     private Date date;
 
+    @Column(name = "lat")
     private Float lat;
+
+    @Column(name = "lon")
     private Float lon;
+
+    @Column(name = "city")
     private String city;
+
+    @Column(name = "state")
     private String state;
 
+    @ElementCollection
+    @CollectionTable(name = "temperatures",
+        joinColumns = {@JoinColumn(name = "weather_id", referencedColumnName = "id")})
+    @Column(name = "temperature")
     private List<Double> temperatures;
 
     public Weather(Integer id, Date date, Float lat, Float lon, String city, String state, List<Double> temperatures) {
