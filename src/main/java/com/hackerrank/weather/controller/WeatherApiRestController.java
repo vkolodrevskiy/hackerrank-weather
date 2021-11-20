@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -45,7 +46,7 @@ public class WeatherApiRestController {
 
   @GetMapping(value = "/weather")
   public List<Weather> filterWeather(
-      @Valid @RequestParam(value = "date", required = false) LocalDate date,
+      @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
       @RequestParam(value = "city", required = false) Set<String> city,
       @RequestParam(value = "sort", required = false) WeatherSortingType sort) {
     WeatherSearchCriteria searchCriteria = WeatherSearchCriteria.of(date, city, sort);
