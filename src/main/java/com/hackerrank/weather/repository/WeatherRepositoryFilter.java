@@ -63,7 +63,7 @@ public class WeatherRepositoryFilter {
     Predicate citiesCondition = null;
 
     if (searchCriteria.getDate() != null) {
-      dateCondition = builder.lessThanOrEqualTo(weather.get("date"),
+      dateCondition = builder.equal(weather.get("date"),
           Date.from(searchCriteria.getDate().atStartOfDay(
               ZoneId.systemDefault()).toInstant()));
     }
