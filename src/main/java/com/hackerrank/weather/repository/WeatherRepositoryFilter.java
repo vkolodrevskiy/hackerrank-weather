@@ -4,7 +4,9 @@ package com.hackerrank.weather.repository;
 import com.hackerrank.weather.model.Weather;
 import com.hackerrank.weather.model.WeatherSearchCriteria;
 import com.hackerrank.weather.model.WeatherSortingType;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -44,7 +46,7 @@ public class WeatherRepositoryFilter {
 
       if (searchCriteria.getSort() == WeatherSortingType.DESC_DATE) {
         orderList.add(cb.desc(expression));
-      } else if (searchCriteria.getSort() == WeatherSortingType.ASC_DATE){
+      } else if (searchCriteria.getSort() == WeatherSortingType.ASC_DATE) {
         orderList.add(cb.asc(expression));
       }
       orderList.add(cb.asc(weather.get("id")));
@@ -55,12 +57,15 @@ public class WeatherRepositoryFilter {
     return em.createQuery(criteriaQuery).getResultList();
   }
 
-  private List<Predicate> getFilterPredicates(WeatherSearchCriteria searchCriteria, CriteriaBuilder builder, Root<Weather> weather) {
+  private List<Predicate> getFilterPredicates(WeatherSearchCriteria searchCriteria,
+      CriteriaBuilder builder, Root<Weather> weather) {
     Predicate dateCondition = null;
     Predicate citiesCondition = null;
 
     if (searchCriteria.getDate() != null) {
-      dateCondition = builder.equal(weather.get("date"), searchCriteria.getDate());
+      dateCondition = builder.equal(weather.get("date"),
+          Date.from(searchCriteria.getDate().atStartOfDay(
+              ZoneId.systemDefault()).toInstant()));
     }
 
     if (searchCriteria.getCities() != null) {
