@@ -29,11 +29,10 @@ public class WeatherService {
   }
 
   public List<Weather> filterWeather(WeatherSearchCriteria searchCriteria) {
-    final List<Weather> weatherList;
     if (searchCriteria.isEmpty()) {
-      return weatherList = weatherRepository.findAll();
+      return weatherRepository.findAll();
     } else {
-      return weatherList = weatherRepositoryFilter.filterWeather(searchCriteria);
+      return weatherRepositoryFilter.filterWeather(searchCriteria);
     }
   }
 }

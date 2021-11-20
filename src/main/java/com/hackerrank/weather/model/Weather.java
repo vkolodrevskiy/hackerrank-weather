@@ -13,15 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tutorials")
+@Table(name = "weather")
 public class Weather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private Integer id;
 
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-//    @Temporal(TemporalType.DATE)
     @Column(name = "date")
     private Date date;
 

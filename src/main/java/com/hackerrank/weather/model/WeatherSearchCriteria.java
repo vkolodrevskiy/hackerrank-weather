@@ -15,7 +15,7 @@ public class WeatherSearchCriteria {
     Set<String> loweredCities = null;
     if (city != null) {
       loweredCities = city.stream()
-          .map(String::toLowerCase)
+          .map(String::toUpperCase)
           .collect(Collectors.toSet());
     }
 
